@@ -1,0 +1,64 @@
+# Machine Learning Classification Project
+# Using Iris Dataset
+
+import numpy as np
+import pandas as pd
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+
+# -----------------------------
+# STEP 1: Load Dataset
+# -----------------------------
+
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+# Convert to DataFrame for exploration
+df = pd.DataFrame(X, columns=iris.feature_names)
+df['target'] = y
+
+print("First 5 rows of dataset:")
+print(df.head())
+
+# -----------------------------
+# STEP 2: Train-Test Split
+# -----------------------------
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# -----------------------------
+# STEP 3: Feature Scaling
+# -----------------------------
+
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+# -----------------------------
+# STEP 4: Model Training
+# -----------------------------
+
+model = LogisticRegression()
+model.fit(X_train, y_train)
+
+# -----------------------------
+# STEP 5: Prediction
+# -----------------------------
+
+y_pred = model.predict(X_test)
+
+# -----------------------------
+# STEP 6: Evaluation
+# -----------------------------
+
+accuracy = accuracy_score(y_test, y_pred)
+
+print("\nModel Accuracy:", accuracy)
+print("\nClassification Report:\n", classification_report(y_test, y_pred))
+print("\nConfusion Matrix:\n", confusion_matrix(y_test, y_pred))
