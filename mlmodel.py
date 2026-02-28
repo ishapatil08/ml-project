@@ -61,4 +61,5 @@ accuracy = accuracy_score(y_test, y_pred)
 
 print("\nModel Accuracy:", accuracy)
 print("\nClassification Report:\n", classification_report(y_test, y_pred))
+
 print("\nConfusion Matrix:\n", confusion_matrix(y_test, y_pred))
